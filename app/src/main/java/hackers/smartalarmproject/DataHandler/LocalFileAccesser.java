@@ -65,13 +65,19 @@ public class LocalFileAccesser {
         String s = fileContent(fileName);
         String[] temp = s.split(LIST_SPLIT);
         for (int i = 0; i < temp.length; i++)
-            data.add(temp[i]);
+            if (temp[i].length() > 2)
+                data.add(temp[i]);
     }
 
     private String fileContent(String name) {
         StringBuilder stringBuilder = new StringBuilder();
         try {
-            InputStreamReader inputStreamReader = new InputStreamReader(context.openFileInput(name), "UTF-8");
+            InputStreamReader inputStreamReader;
+            try {
+                inputStreamReader = new InputStreamReader(context.openFileInput(name));
+            } catch (FileNotFoundException e) {
+                inputStreamReader = new InputStreamReader(context.getAssets().open(name));
+            }
             BufferedReader br = new BufferedReader(inputStreamReader);
             String line = br.readLine();
             while (line != null) {

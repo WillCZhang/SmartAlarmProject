@@ -23,8 +23,8 @@ public class ReadingMaterialData {
         }
     }
 
-    public static void addMaterial(String material) {
-        materials.add(material);
+    public static void addMaterial(ReadingMaterial material) {
+        materials.add(material.toString());
         storeRMData();
     }
 

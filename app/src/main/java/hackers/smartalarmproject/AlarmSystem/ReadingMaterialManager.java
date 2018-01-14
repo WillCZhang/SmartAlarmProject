@@ -24,7 +24,7 @@ public class ReadingMaterialManager {
         if (readingMaterials.contains(readingMaterial))
             return false;
         readingMaterials.add(readingMaterial);
-        ReadingMaterialData.addMaterial(readingMaterial.toString());
+        ReadingMaterialData.addMaterial(readingMaterial);
         return true;
     }
 

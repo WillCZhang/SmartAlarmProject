@@ -50,10 +50,7 @@ public class ReadingMaterial {
 
         ReadingMaterial that = (ReadingMaterial) o;
 
-        if (modifiedReading != null ? !modifiedReading.equals(that.modifiedReading) : that.modifiedReading != null)
-            return false;
-        return tag != null ? tag.equals(that.tag) : that.tag == null;
-
+        return modifiedReading != null ? modifiedReading.equals(that.modifiedReading) : that.modifiedReading == null && (tag != null ? tag.equals(that.tag) : that.tag == null);
     }
 
     @Override
