@@ -14,4 +14,13 @@ public class Alarm {
     public Alarm() {
 
     }
+
+    @Override
+    public String toString() {
+        return null;
+    }
+
+    public static Alarm formAlarm(String s) {
+        return null;
+    }
 }
