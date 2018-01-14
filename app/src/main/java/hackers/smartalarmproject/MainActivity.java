@@ -11,10 +11,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import hackers.smartalarmproject.AlarmSystem.Alarm;
+import hackers.smartalarmproject.DataHandler.AlarmListData;
+import hackers.smartalarmproject.UIAdapter.AlarmListAdapter;
+
 public class MainActivity extends AppCompatActivity {
     private Toolbar topBar;
     private FloatingActionButton addNewAlarm;
-    private ListView alarmList;
+    private ListView alarmListView;
+    private AlarmListAdapter alarmListAdapter;
+    private List<Alarm> alarmList;
     private AlarmManager alarmManager;
 
     @Override
@@ -29,7 +38,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void iniData() {
-
+        alarmList = new ArrayList<>();
+        AlarmListData.loadAlarmList(alarmList);
+        alarmListAdapter = new AlarmListAdapter(this, alarmList);
     }
 
     private void iniViews() {
@@ -45,7 +56,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        alarmList = (ListView) findViewById(R.id.alarmList);
+        alarmListView = (ListView) findViewById(R.id.alarmList);
+        alarmListView.setAdapter(alarmListAdapter);
+    }
+
+    public void addAlart(Alarm alarm) {
+        alarmList.add(alarm);
+        alarmListAdapter.notifyDataSetChanged();
+        AlarmListData.storeAlarmList(alarmList);
     }
 
     @Override
