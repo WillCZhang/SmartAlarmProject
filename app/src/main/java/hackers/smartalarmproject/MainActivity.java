@@ -16,6 +16,7 @@ import java.util.List;
 
 import hackers.smartalarmproject.AlarmSystem.Alarm;
 import hackers.smartalarmproject.DataHandler.AlarmListData;
+import hackers.smartalarmproject.DataHandler.LocalFileAccesser;
 import hackers.smartalarmproject.UIAdapter.AlarmListAdapter;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private AlarmListAdapter alarmListAdapter;
     private List<Alarm> alarmList;
     private AlarmManager alarmManager;
+    private LocalFileAccesser localFileAccesser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void iniData() {
+        localFileAccesser = LocalFileAccesser.getInstance();
+
         alarmList = new ArrayList<>();
         AlarmListData.loadAlarmList(alarmList);
         alarmListAdapter = new AlarmListAdapter(this, alarmList);
