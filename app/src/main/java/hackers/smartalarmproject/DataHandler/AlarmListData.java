@@ -15,16 +15,14 @@ public class AlarmListData {
     public static final String TAG = "ALD";
     private static List<String> tempList = new ArrayList<>();
 
-    public static boolean loadAlarmList(List<Alarm> list) {
-        LocalFileAccesser.readFile(TAG, tempList);
+    public static void loadAlarmList(List<Alarm> list) {
+        LocalFileAccesser.getInstance().readFile(TAG, tempList);
         transform(list);
-        return false;
     }
 
-    public static boolean storeAlarmList(List<Alarm> list) {
-        LocalFileAccesser.readFile(TAG, tempList);
+    public static void storeAlarmList(List<Alarm> list) {
+        LocalFileAccesser.getInstance().writeFile(TAG, tempList);
         transform(list);
-        return false;
     }
 
     private static void transform(List<Alarm> list) {

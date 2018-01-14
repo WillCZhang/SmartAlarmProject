@@ -9,14 +9,23 @@ import hackers.smartalarmproject.DataHandler.ReadingMaterialData;
  * Created by Will on 2018/1/13.
  */
 
-class ReadingMaterialManager {
+public class ReadingMaterialManager {
     private static ReadingMaterialManager ourInstance;
     private List<ReadingMaterial> readingMaterials;
 
-    static ReadingMaterialManager getInstance() {
+    public static ReadingMaterialManager getInstance() {
         if (ourInstance == null)
             ourInstance = new ReadingMaterialManager();
         return ourInstance;
+    }
+
+    public boolean addMaterial(String material, String tag) {
+        ReadingMaterial readingMaterial = new ReadingMaterial(material, tag);
+        if (readingMaterials.contains(readingMaterial))
+            return false;
+        readingMaterials.add(readingMaterial);
+        ReadingMaterialData.addMaterial(readingMaterial.toString());
+        return true;
     }
 
     private ReadingMaterialManager() {
@@ -25,9 +34,6 @@ class ReadingMaterialManager {
     }
 
     private void loadData() {
-        boolean successed = ReadingMaterialData.LoadReadingMaterial();
-        if (!successed) {
-            // TODO
-        }
+        ReadingMaterialData.loadReadingMaterial(readingMaterials);
     }
 }

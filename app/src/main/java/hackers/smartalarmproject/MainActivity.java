@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hackers.smartalarmproject.AlarmSystem.Alarm;
+import hackers.smartalarmproject.AlarmSystem.ReadingMaterial;
+import hackers.smartalarmproject.AlarmSystem.ReadingMaterialManager;
 import hackers.smartalarmproject.DataHandler.AlarmListData;
 import hackers.smartalarmproject.DataHandler.LocalFileAccesser;
 import hackers.smartalarmproject.UIAdapter.AlarmListAdapter;
@@ -26,7 +28,9 @@ public class MainActivity extends AppCompatActivity {
     private AlarmListAdapter alarmListAdapter;
     private List<Alarm> alarmList;
     private AlarmManager alarmManager;
+
     private LocalFileAccesser localFileAccesser;
+    private ReadingMaterialManager readingMaterialManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +44,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void iniData() {
-        localFileAccesser = LocalFileAccesser.getInstance();
+        localFileAccesser = LocalFileAccesser.getInstance(this);
+
+        readingMaterialManager = ReadingMaterialManager.getInstance();
 
         alarmList = new ArrayList<>();
         AlarmListData.loadAlarmList(alarmList);
@@ -68,6 +74,10 @@ public class MainActivity extends AppCompatActivity {
         alarmList.add(alarm);
         alarmListAdapter.notifyDataSetChanged();
         AlarmListData.storeAlarmList(alarmList);
+    }
+
+    public void addReadingMaterial(String readingMaterial, String tag) {
+        readingMaterialManager.addMaterial(readingMaterial, tag);
     }
 
     @Override
