@@ -23,12 +23,13 @@ public class ReadingMaterialData {
         }
     }
 
+    public static void addMaterial(String material) {
+        materials.add(material);
+        storeRMData();
+    }
+
     public static void storeRMData() {
         LocalFileAccesser.getInstance().writeFile(TAG, materials);
     }
 
-    public static void addMaterial(String material) {
-        materials.add(material);
-        LocalFileAccesser.getInstance().writeFile(TAG, materials);
-    }
 }
