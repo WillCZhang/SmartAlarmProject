@@ -1,15 +1,20 @@
 package hackers.smartalarmproject;
 
 import android.app.AlarmManager;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +25,11 @@ import hackers.smartalarmproject.AlarmSystem.ReadingMaterialManager;
 import hackers.smartalarmproject.DataHandler.AlarmListData;
 import hackers.smartalarmproject.DataHandler.LocalFileAccesser;
 import hackers.smartalarmproject.UIAdapter.AlarmListAdapter;
+import hackers.smartalarmproject.VoiceRecognition.VoiceHandler;
 
 public class MainActivity extends AppCompatActivity {
+    public static final int REQ_CODE_SPEECH_INPUT = 100;
+
     private Toolbar topBar;
     private FloatingActionButton addNewAlarm;
     private ListView alarmListView;
@@ -32,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private LocalFileAccesser localFileAccesser;
     private ReadingMaterialManager readingMaterialManager;
 
+    private Intent voiceRec;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +51,11 @@ public class MainActivity extends AppCompatActivity {
         iniViews();
 
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        ReadingMaterial temp = ReadingMaterialManager.getInstance().getReadingMaterialByIndex(0);
+        voiceRec = VoiceHandler.getVoiceHandlerIntent(temp);
+        startVoiceRecognition();
+//        voiceRec = new Intent(this, ReadingView.class);
+//        startActivity(voiceRec);
     }
 
     private void iniData() {
@@ -76,6 +91,17 @@ public class MainActivity extends AppCompatActivity {
         AlarmListData.storeAlarmList(alarmList);
     }
 
+    private void startVoiceRecognition() {
+        assert voiceRec != null;
+        try {
+            startActivityForResult(voiceRec, REQ_CODE_SPEECH_INPUT);
+        } catch (ActivityNotFoundException a) {
+            Toast.makeText(getApplicationContext(),
+                    "???",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public void addReadingMaterial(String readingMaterial, String tag) {
         readingMaterialManager.addMaterial(readingMaterial, tag);
     }
@@ -100,5 +126,22 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case REQ_CODE_SPEECH_INPUT: {
+                if (resultCode == RESULT_OK && null != data) {
+
+                    ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    Log.i("","");
+                }
+                break;
+            }
+
+        }
     }
 }

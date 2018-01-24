@@ -24,6 +24,10 @@ public class ReadingMaterial {
         alarms = new ArrayList<>();
     }
 
+    public String getReading() {
+        return reading;
+    }
+
     public void addAlarm(Alarm a) {
         alarms.add(a);
     }

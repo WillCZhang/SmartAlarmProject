@@ -28,6 +28,10 @@ public class ReadingMaterialManager {
         return true;
     }
 
+    public ReadingMaterial getReadingMaterialByIndex(int index) {
+        return readingMaterials.get(index);
+    }
+
     private ReadingMaterialManager() {
         readingMaterials = new ArrayList<>();
         loadData();
