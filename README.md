@@ -1,7 +1,6 @@
 # SmartAlarmProject
 
-This is an Android alarm system, which rings can be turned off only when the user reads a reading material 
-and achieves a certain accuracy.
+This is an Android alarm system, whereby rings can be turned off only when the user reads reading materials and achieves a certain accuracy.
 
 The application is still under developing. The backend system is functional, but we need working on UI design.
 
